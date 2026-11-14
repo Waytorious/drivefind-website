@@ -452,8 +452,9 @@ function initCatalogueFilter() {
 // 4. ДИНАМИЧЕСКАЯ СТРАНИЦА АВТОМОБИЛЯ (item.html?id=...)
 // ==========================================================================
 function initItemPage() {
+  if (!document.querySelector('.gallery-card')) return; // мы не на странице товара
   const h1 = document.querySelector('.item-card h1');
-  if (!h1) return; // мы не на странице товара
+  if (!h1) return;
 
   // Считываем ID автомобиля из строки браузера (?id=...)
   const params = new URLSearchParams(window.location.search);
