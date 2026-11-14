@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env
+
+# Database (avoid committing local database instance with test credentials)
+*.db
+*.sqlite3
+
+# macOS
+.DS_Store
+
+# IDEs
+.vscode/
+.idea/
+.vs/
+
+# Course handouts
+*.pdf
+*.docx

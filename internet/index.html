@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DriveFind</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- шапка сайта -->
+  <header>
+    <a href="index.html" class="logo">
+      <span class="material-symbols-outlined">directions_car</span>
+      DriveFind
+    </a>
+    <nav class="nav-links">
+      <a href="favorites.html">Избранное</a>
+      <a href="catalogue.html">Каталог</a>
+      <a href="compare.html">Сравнение</a>
+      <a href="contacts.html">Контакты</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- гениальная фраза на главной -->
+    <section class="hero">
+      <h1>Найди свой следующий автомобиль</h1>
+      <p>Твой простой маркетплейс для поиска и сравнения авто с пробегом.</p>
+    </section>
+
+    <!-- 6 богами данных мне машин -->
+    <section class="cars-section">
+      <h2>Популярные автомобили</h2>
+      <div class="car-grid">
+
+        <div class="card">
+          <img src="images/rav4/1.jpeg" alt="Toyota RAV4">
+          <h3>2021 Toyota RAV4</h3>
+          <p>45,000 км • Автомат</p>
+          <div class="card-footer">
+            <span class="price" data-base-price="26500">$26,500</span>
+            <a href="item.html?id=1" class="btn">Подробнее</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <img src="images/civic/1.jpeg" alt="Honda Civic">
+          <h3>2019 Honda Civic</h3>
+          <p>62,000 км • Механика</p>
+          <div class="card-footer">
+            <span class="price" data-base-price="18200">$18,200</span>
+            <a href="item.html?id=2" class="btn">Подробнее</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <img src="images/cx-5/1.jpeg" alt="Mazda CX-5">
+          <h3>2020 Mazda CX-5</h3>
+          <p>38,000 км • Автомат</p>
+          <div class="card-footer">
+            <span class="price" data-base-price="24000">$24,000</span>
+            <a href="item.html?id=3" class="btn">Подробнее</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <img src="images/bmw-3/1.jpeg" alt="BMW 3 Series">
+          <h3>2018 BMW 3 Series</h3>
+          <p>85,000 км • Автомат</p>
+          <div class="card-footer">
+            <span class="price" data-base-price="22900">$22,900</span>
+            <a href="item.html?id=4" class="btn">Подробнее</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <img src="images/cybertruck/1.jpeg" alt="Tesla Cybertruck">
+          <h3>2023 Tesla Cybertruck</h3>
+          <p>21,000 км • Автомат</p>
+          <div class="card-footer">
+            <span class="price" data-base-price="60990">$60,990</span>
+            <a href="item.html?id=5" class="btn">Подробнее</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <img src="images/golf/1.jpeg" alt="VW Golf">
+          <h3>2017 VW Golf</h3>
+          <p>92,000 км • Механика</p>
+          <div class="card-footer">
+            <span class="price" data-base-price="14500">$14,500</span>
+            <a href="item.html?id=6" class="btn">Подробнее</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- подвал -->
+  <footer>
+    <p>&copy; 2026 DriveFind. Все права защищены.</p>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

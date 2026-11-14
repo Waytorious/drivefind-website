@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DriveFind — Сравнение автомобилей</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- шапка сайта -->
+  <header>
+    <a href="index.html" class="logo">
+      <span class="material-symbols-outlined">directions_car</span>
+      DriveFind
+    </a>
+    <nav class="nav-links">
+      <a href="favorites.html">Избранное</a>
+      <a href="catalogue.html">Каталог</a>
+      <a href="compare.html">Сравнение</a>
+      <a href="contacts.html">Контакты</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="cars-section wide">
+      <!-- заголовок страницы -->
+      <div class="hero">
+        <h1>Сравнение автомобилей</h1>
+        <p>Выберите две модели для детального сравнения спецификаций</p>
+      </div>
+
+      <!-- две колонки для сравнения -->
+      <div class="compare-dual-container">
+
+        <!-- первая машинка -->
+        <article class="compare-column-card">
+          <div class="compare-select-wrapper">
+            <label for="car-select-1"><strong>Автомобиль 1:</strong></label>
+            <select id="car-select-1" class="compare-select">
+              <option value="7" selected>2005 Mazda MX-5 Miata</option>
+              <option value="1">2021 Toyota RAV4</option>
+              <option value="2">2019 Honda Civic</option>
+              <option value="3">2020 Mazda CX-5</option>
+              <option value="4">2018 BMW 3 Series</option>
+              <option value="5">2023 Tesla Cybertruck</option>
+              <option value="6">2017 VW Golf</option>
+              <option value="8">2020 Ford Mustang</option>
+              <option value="9">2021 Nissan Altima</option>
+              <option value="10">2019 Audi A4</option>
+              <option value="11">2018 Subaru Outback</option>
+              <option value="12">2022 Kia Sportage</option>
+            </select>
+          </div>
+
+          <div class="compare-preview">
+            <img src="images/miata/1.jpeg" alt="2020 Mazda MX-5">
+            <h3>2005 Mazda MX-5 Miata</h3>
+            <p class="price-large" data-base-price="15400">$15,400</p>
+          </div>
+
+          <div class="compare-specs-list">
+            <h4>Точные характеристики</h4>
+            <div class="spec-row">
+              <span class="spec-row-label">Двигатель</span>
+              <span class="spec-row-val">2.0L SkyActiv-G I4</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-row-label">Мощность</span>
+              <span class="spec-row-val">181 л.с.</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-row-label">Крутящий момент</span>
+              <span class="spec-row-val">205 Нм</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-row-label">КПП</span>
+              <span class="spec-row-val">6-ст. Механика</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-row-label">Привод</span>
+              <span class="spec-row-val">Задний (RWD)</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-row-label">Разгон 0-100 км/ч</span>
+              <span class="spec-row-val">6.5 сек</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-row-label">Расход топлива</span>
+              <span class="spec-row-val">6.9 л / 100 км</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-row-label">Масса</span>
+              <span class="spec-row-val">1058 кг</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-row-label">Объем бака</span>
+              <span class="spec-row-val">45 л</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- вторая машинка -->
+        <article class="compare-column-card">
+          <div class="compare-select-wrapper">
+            <label for="car-select-2"><strong>Автомобиль 2:</strong></label>
+            <select id="car-select-2" class="compare-select">
+              <option value="7">2005 Mazda MX-5 Miata</option>
+              <option value="1" selected>2021 Toyota RAV4</option>
+              <option value="2">2019 Honda Civic</option>
+              <option value="3">2020 Mazda CX-5</option>
+              <option value="4">2018 BMW 3 Series</option>
+              <option value="5">2023 Tesla Cybertruck</option>
+              <option value="6">2017 VW Golf</option>
+              <option value="8">2020 Ford Mustang</option>
+              <option value="9">2021 Nissan Altima</option>
+              <option value="10">2019 Audi A4</option>
+              <option value="11">2018 Subaru Outback</option>
+              <option value="12">2022 Kia Sportage</option>
+            </select>
+          </div>
+
+          <div class="compare-preview">
+            <img src="images/rav4/1.jpeg" alt="2021 Toyota RAV4">
+            <h3>2021 Toyota RAV4</h3>
+            <p class="price-large" data-base-price="26500">$26,500</p>
+          </div>
+
+          <div class="compare-specs-list">
+            <h4>Точные характеристики</h4>
+            <div class="spec-row">
+              <span class="spec-row-label">Двигатель</span>
+              <span class="spec-row-val">2.5L Dynamic Force I4</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-row-label">Мощность</span>
+              <span class="spec-row-val">203 л.с.</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-row-label">Крутящий момент</span>
+              <span class="spec-row-val">249 Нм</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-row-label">КПП</span>
+              <span class="spec-row-val">8-ст. Автомат</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-row-label">Привод</span>
+              <span class="spec-row-val">Полный (AWD)</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-row-label">Разгон 0-100 км/ч</span>
+              <span class="spec-row-val">8.4 сек</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-row-label">Расход топлива</span>
+              <span class="spec-row-val">7.8 л / 100 км</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-row-label">Масса</span>
+              <span class="spec-row-val">1615 кг</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-row-label">Объем бака</span>
+              <span class="spec-row-val">55 л</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- подвал -->
+  <footer>
+    <p>&copy; 2026 DriveFind. Все права защищены.</p>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

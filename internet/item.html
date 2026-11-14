@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DriveFind — 2005 Mazda MX-5 Miata</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- шапка сайта -->
+  <header>
+    <a href="index.html" class="logo">
+      <span class="material-symbols-outlined">directions_car</span>
+      DriveFind
+    </a>
+    <nav class="nav-links">
+      <a href="favorites.html">Избранное</a>
+      <a href="catalogue.html">Каталог</a>
+      <a href="compare.html">Сравнение</a>
+      <a href="contacts.html">Контакты</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="item-container">
+
+      <!-- фоточка и описалово -->
+      <div class="item-details">
+        <article class="item-card gallery-card">
+          <button class="gallery-btn prev-btn" type="button" aria-label="Предыдущее фото">
+            <span class="material-symbols-outlined">chevron_left</span>
+          </button>
+          <img src="images/miata/1.jpeg" alt="2005 Mazda MX-5 Miata" id="gallery-img">
+          <button class="gallery-btn next-btn" type="button" aria-label="Следующее фото">
+            <span class="material-symbols-outlined">chevron_right</span>
+          </button>
+          <div class="gallery-dots" id="gallery-dots"></div>
+        </article>
+
+        <article class="item-card">
+          <h1>2005 Mazda MX-5 Miata</h1>
+          <p class="item-subtitle">28,000 км • Механика • Задний привод</p>
+          <p class="price-large" data-base-price="15400">$15,400</p>
+          <p class="description">
+            Компактный и легкий родстер с идеальной развесовкой 50:50. Отличное состояние, один владелец, регулярное обслуживание у официального дилера.
+          </p>
+          <div class="card-footer-item">
+            <a href="contacts.html" class="btn btn-large">Связаться с продавцом</a>
+          </div>
+        </article>
+      </div>
+
+      <!-- таблица характеристик -->
+      <article class="full-specs-card">
+        <h2>Полные технические характеристики</h2>
+        <div class="specs-grid">
+          <div class="spec-item">
+            <span class="spec-label">Двигатель:</span>
+            <span class="spec-value">2.0L SkyActiv-G I4</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">Мощность:</span>
+            <span class="spec-value">181 л.с. @ 7000 об/мин</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">Крутящий момент:</span>
+            <span class="spec-value">205 Нм @ 4000 об/мин</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">Коробка передач:</span>
+            <span class="spec-value">6-ступенчатая механика</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">Привод:</span>
+            <span class="spec-value">Задний (RWD)</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">Разгон 0-100 км/ч:</span>
+            <span class="spec-value">6.5 сек</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">Макс. скорость:</span>
+            <span class="spec-value">219 км/ч</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">Расход топлива:</span>
+            <span class="spec-value">6.9 л / 100 км</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">Снаряженная масса:</span>
+            <span class="spec-value">1058 кг</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">Объем бака:</span>
+            <span class="spec-value">45 л</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">Тип кузова:</span>
+            <span class="spec-value">Родстер / Кабриолет</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">Количество мест:</span>
+            <span class="spec-value">2</span>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </main>
+
+  <!-- подвал -->
+  <footer>
+    <p>&copy; 2026 DriveFind. Все права защищены.</p>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

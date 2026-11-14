@@ -1,0 +1,528 @@
+/* родная первоначальная цветовая гамма */
+:root {
+  --bg-color: #e6eefc; /* цвет фона самого сайта */
+  --header-bg: #bdd6fc; /* цвет фона header */
+  --footer-bg: #2b2823; /* цвет фона footer */
+  --primary: #3a71c9; /* цвет текста цены и кнопок в карточке */
+  --card-bg: white; /* цвет фона карточки */
+  --text: #1d1b16; /* основной цвет текста на сайте */
+  --text-bright: white; /* цвет текста в кнопках и в подвале */
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text);
+  margin: 0;
+
+  /* чтобы footer внизу сайта лежал независимо от количества контента на странице */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  text-decoration: none;
+  color: var(--text);
+}
+
+/* шапка сайта */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--header-bg);
+  padding: 0.8rem 1.5rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+  flex-wrap: nowrap; /* чтобы не перенослись элементы на новую строку */
+}
+
+.logo {
+  font-size: 1.2rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-weight: bold;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+
+.nav-links a {
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
+}
+
+/* моя геройская секция */
+.hero {
+  text-align: center;
+  padding: 1.5rem 1rem;
+}
+
+.hero h1 {
+  margin: 0 0 0.5rem 0;
+}
+
+.hero p {
+  margin: 0;
+}
+
+/* общие блоки и сетка */
+.cars-section {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1rem;
+  width: 100%;
+}
+
+.cars-section.wide {
+  max-width: 1200px;
+}
+
+.cars-section h2 {
+  text-align: center;
+}
+
+/* фильтры в каталоге (3 столбца: Цена, Год, Пробег + кнопка) */
+.filter-box {
+  background-color: var(--card-bg);
+  padding: 1rem 1.2rem;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+  width: 100%;
+}
+
+.filter-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.filter-col input {
+  padding: 0.5rem 0.7rem;
+  border: 1px solid #ccc;
+  border-radius: 14px;
+  font-size: 0.85rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.filter-box button {
+  flex-shrink: 0;
+  white-space: nowrap;
+  padding: 0.8rem 1.6rem;
+  border-radius: 16px;
+  height: fit-content;
+}
+
+/* сетка с машинками, чтобы фильтры не выпирали, она тоже растягивается на 100% */
+.car-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+  width: 100%;
+}
+
+/* карточка с машинкой */
+.card {
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+}
+
+/* фото машины в карточке */
+.card img {
+  width: 100%;
+  height: 170px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.card h3 {
+  margin: 0.8rem 0 0.3rem 0;
+}
+
+.card p {
+  margin: 0 0 0.8rem 0;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+
+/* цена в карточке */
+.price {
+  font-weight: bold;
+  color: var(--primary);
+  font-size: 1.1rem;
+}
+
+.price-large {
+  font-weight: bold;
+  color: var(--primary);
+  font-size: 1.5rem;
+  margin: 0.5rem 0;
+}
+
+/* кнопка в карточке с закруглением */
+.btn {
+  background-color: var(--primary);
+  color: var(--text-bright);
+  padding: 0.5rem 1rem;
+  border-radius: 16px;
+  border: none;
+  cursor: pointer;
+  display: inline-block;
+  text-align: center;
+}
+
+.btn-large {
+  padding: 0.7rem 1.5rem;
+  font-size: 1rem;
+}
+
+/* страница одной машины */
+.item-container {
+  max-width: 960px;
+  margin: 1.5rem auto;
+  padding: 0 1rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.item-details {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.item-card {
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.gallery-card {
+  flex: 1.2;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+}
+
+.gallery-card img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Кнопки переключения фото в стиле Material Design */
+.gallery-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(4px);
+  color: #1e293b;
+  border: none;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+.gallery-btn:hover {
+  background: #ffffff;
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+  color: var(--primary);
+}
+
+.prev-btn { left: 14px; }
+.next-btn { right: 14px; }
+
+/* Индикаторы страниц фото (точки/кружки) */
+.gallery-dots {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(4px);
+  padding: 5px 10px;
+  border-radius: 20px;
+  z-index: 10;
+}
+
+.gallery-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.45);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.gallery-dot:hover {
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.gallery-dot.active {
+  background: #ffffff;
+  width: 22px;
+  border-radius: 10px;
+}
+
+.item-subtitle {
+  font-size: 0.95rem;
+}
+
+.description {
+  line-height: 1.4;
+}
+
+.card-footer-item {
+  margin-top: auto;
+  padding-top: 1rem;
+}
+
+.full-specs-card {
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+}
+
+.full-specs-card h2 {
+  margin-top: 0;
+  border-bottom: 2px solid var(--bg-color);
+  padding-bottom: 0.5rem;
+}
+
+.specs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 0.8rem;
+}
+
+.spec-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem;
+  background-color: #f7fafe;
+  border-radius: 8px;
+}
+
+.spec-value {
+  font-weight: bold;
+}
+
+/* страница сравнения машин */
+.compare-dual-container {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.compare-column-card {
+  flex: 1;
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.compare-select-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.compare-select {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 16px;
+  width: 100%;
+}
+
+.compare-preview {
+  text-align: center;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 1rem;
+}
+
+/* картинка заполняет весь блок целиком, без пустых полей по бокам */
+.compare-preview img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.compare-preview h3 {
+  margin: 0.5rem 0 0.2rem 0;
+}
+
+.compare-specs-list h4 {
+  margin: 0 0 0.8rem 0;
+  color: var(--primary);
+  text-align: center;
+}
+
+.spec-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px dashed #e0e0e0;
+}
+
+.spec-row-val {
+  font-weight: bold;
+}
+
+/* форма обратной связи на странице контактов */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.contact-form input, .contact-form textarea {
+  padding: 0.7rem;
+  border: 1px solid #ccc;
+  border-radius: 16px;
+  font-family: inherit;
+}
+
+/* шоб не меняли размер поля для текста */
+.contact-form textarea {
+  resize: none;
+}
+
+/* подвал сайта */
+footer {
+  text-align: center;
+  padding: 1rem;
+  background-color: var(--footer-bg);
+  color: var(--text-bright);
+  margin-top: auto;
+}
+
+/* мобилка: пропорционально ужимаем шапку, чтобы она оставалась в одну строчку */
+@media (max-width: 768px) {
+  header {
+    padding: 0.6rem 0.8rem;
+    gap: 0.5rem;
+    flex-wrap: nowrap; /* Хедер всегда строго в одну строку */
+  }
+  .logo {
+    font-size: 0.95rem;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+  .nav-links {
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    flex-wrap: nowrap;
+  }
+  .item-details {
+    flex-direction: column;
+  }
+  .compare-dual-container {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  header {
+    padding: 0.5rem;
+  }
+  .logo {
+    font-size: 0.85rem;
+  }
+  .nav-links {
+    gap: 0.35rem;
+    font-size: 0.78rem;
+  }
+}
+
+/* Кнопка избранного на карточках авто */
+.card {
+  position: relative;
+}
+
+.fav-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+  transition: transform 0.2s, background 0.2s;
+  z-index: 5;
+  padding: 0;
+  line-height: 1;
+}
+
+.fav-btn:hover {
+  transform: scale(1.15);
+  background: #ffffff;
+}
+
+.fav-btn.active {
+  background: #ffe4e6;
+  border-color: #f43f5e;
+}
+

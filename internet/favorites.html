@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Избранное — DriveFind</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+</head>
+<body>
+
+  <header>
+    <a href="index.html" class="logo">
+      <span class="material-symbols-outlined">directions_car</span>
+      DriveFind
+    </a>
+    <nav class="nav-links">
+      <a href="favorites.html" class="active">Избранное</a>
+      <a href="catalogue.html">Каталог</a>
+      <a href="compare.html">Сравнение</a>
+      <a href="contacts.html">Контакты</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="cars-section">
+      <h1>Избранные автомобили</h1>
+      <p style="color: #64748b; margin-top: -10px; margin-bottom: 25px;">
+        Сохранённые вами автомобили для быстрого доступа и отслеживания.
+      </p>
+
+      <div class="car-grid" id="favorites-grid">
+        <!-- Заполняется скриптом main.js идентичными карточками -->
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2026 DriveFind. Учебный проект по интернет-технологиям.</p>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
