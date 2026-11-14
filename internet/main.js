@@ -608,8 +608,8 @@ function initAuthHeader() {
   const authBtn = document.createElement('a');
   authBtn.href = '#';
   authBtn.id = 'auth-link';
-  authBtn.style.cssText = 'color: #3a71c9; cursor: pointer; display: inline-flex; align-items: center; vertical-align: middle;';
-  nav.appendChild(authBtn);
+  authBtn.className = 'auth-nav-btn';
+  header.appendChild(authBtn);
 
   // 1. Модальное окно Входа и Регистрации (переключение по табам)
   let authModal = document.getElementById('login-modal');
