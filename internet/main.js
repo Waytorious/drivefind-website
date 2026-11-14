@@ -631,10 +631,10 @@ function initAuthHeader() {
         <!-- Форма Входа -->
         <div id="form-login">
           <div style="margin-bottom:12px;">
-            <input type="text" id="login-username" value="demo" placeholder="Логин" style="width:100%; padding:10px 12px; border:1px solid #ccc; border-radius:12px; box-sizing:border-box; font-size:14px; outline:none;">
+            <input type="text" id="login-username" placeholder="Логин" style="width:100%; padding:10px 12px; border:1px solid #ccc; border-radius:12px; box-sizing:border-box; font-size:14px; outline:none;">
           </div>
           <div style="margin-bottom:14px;">
-            <input type="password" id="login-password" value="demo123" placeholder="Пароль" style="width:100%; padding:10px 12px; border:1px solid #ccc; border-radius:12px; box-sizing:border-box; font-size:14px; outline:none;">
+            <input type="password" id="login-password" placeholder="Пароль" style="width:100%; padding:10px 12px; border:1px solid #ccc; border-radius:12px; box-sizing:border-box; font-size:14px; outline:none;">
           </div>
           <button id="login-submit-btn" class="btn" style="width:100%; padding:10px; font-size:15px; border-radius:14px;">Войти</button>
         </div>
