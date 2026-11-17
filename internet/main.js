@@ -379,6 +379,8 @@ const emptyBox = (icon, title, text, actionHtml) => `
     ${actionHtml}
   </div>`;
 
+const heartIcon = active => `<svg viewBox="0 0 24 24" width="17" height="17" fill="${active ? '#e11d48' : 'none'}" stroke="${active ? '#e11d48' : '#334155'}" stroke-width="2.2" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`;
+
 function initFavoritesPage() {
   const grid = document.getElementById('favorites-grid');
   if (!grid) return;
@@ -416,7 +418,7 @@ function initFavoritesPage() {
         card.className = 'card';
         card.id = `fav-card-${car.id}`;
         card.innerHTML = `
-          <button class="fav-btn active" type="button" data-car-id="${car.id}" title="Удалить из избранного">❤️</button>
+          <button class="fav-btn active" type="button" data-car-id="${car.id}" title="Удалить из избранного">${heartIcon(true)}</button>
           <img src="${car.image_url}" alt="${car.brand} ${car.model}">
           <h3>${car.year} ${car.brand} ${car.model}</h3>
           <p>${car.mileage ? car.mileage.toLocaleString() + ' км' : ''} • ${car.transmission}</p>
@@ -455,7 +457,7 @@ function initFavoritesButtons() {
       favBtn.type = 'button';
       favBtn.title = 'Добавить в избранное';
       favBtn.dataset.carId = carId;
-      favBtn.innerHTML = '🤍';
+      favBtn.innerHTML = heartIcon(false);
       card.appendChild(favBtn);
     }
     favBtn.onclick = e => { e.stopPropagation(); e.preventDefault(); handleFavoriteClick(carId, favBtn); };
@@ -468,9 +470,9 @@ function initFavoritesButtons() {
     if (!itemFavBtn) {
       itemFavBtn = document.createElement('button');
       itemFavBtn.id = 'item-fav-btn';
-      itemFavBtn.className = 'btn';
-      itemFavBtn.style.cssText = 'margin-top:10px; background:#fff; color:#3a71c9; border:1px solid #3a71c9; width:100%; border-radius:12px;';
-      itemFavBtn.innerHTML = '🤍 В избранное';
+      itemFavBtn.type = 'button';
+      itemFavBtn.className = 'btn btn-large btn-outline';
+      itemFavBtn.innerHTML = `${heartIcon(false)}<span>В избранное</span>`;
       itemFooter.appendChild(itemFavBtn);
     }
     itemFavBtn.onclick = () => handleFavoriteClick(carId, itemFavBtn);
@@ -501,36 +503,30 @@ function handleFavoriteClick(carId, btn) {
 
 function updateCardsFavoriteState() {
   const navFavLinks = document.querySelectorAll('a[href="favorites.html"], #nav-fav-link');
-  const setEmptyState = () => {
-    navFavLinks.forEach(l => { l.innerText = 'Избранное'; });
-    document.querySelectorAll('.fav-btn').forEach(b => { b.innerHTML = '🤍'; b.classList.remove('active'); });
+  const renderFavState = favIds => {
+    const title = favIds.size ? `Избранное (${favIds.size})` : 'Избранное';
+    navFavLinks.forEach(l => { l.innerText = title; });
+
+    document.querySelectorAll('.fav-btn').forEach(b => {
+      const active = favIds.has(parseInt(b.dataset.carId, 10));
+      b.innerHTML = heartIcon(active);
+      b.classList.toggle('active', active);
+    });
+
     const itemBtn = document.getElementById('item-fav-btn');
-    if (itemBtn) { itemBtn.innerHTML = '🤍 В избранное'; itemBtn.classList.remove('active'); }
+    if (itemBtn) {
+      const curId = parseInt(new URLSearchParams(window.location.search).get('id') || '7', 10);
+      const active = favIds.has(curId);
+      itemBtn.innerHTML = `${heartIcon(active)}<span>${active ? 'В избранном' : 'В избранное'}</span>`;
+      itemBtn.classList.toggle('active', active);
+    }
   };
 
-  if (!localStorage.getItem('drivefind_token')) return setEmptyState();
+  if (!localStorage.getItem('drivefind_token')) return renderFavState(new Set());
 
   fetch('/api/favorites', { headers: authHeaders() })
     .then(r => r.json())
-    .then(cars => {
-      const favIds = new Set(cars.map(c => c.id));
-      const title = favIds.size ? `Избранное (${favIds.size})` : 'Избранное';
-      navFavLinks.forEach(l => { l.innerText = title; });
-
-      document.querySelectorAll('.fav-btn').forEach(b => {
-        const active = favIds.has(parseInt(b.dataset.carId, 10));
-        b.innerHTML = active ? '❤️' : '🤍';
-        b.classList.toggle('active', active);
-      });
-
-      const itemBtn = document.getElementById('item-fav-btn');
-      if (itemBtn) {
-        const curId = parseInt(new URLSearchParams(window.location.search).get('id') || '7', 10);
-        const active = favIds.has(curId);
-        itemBtn.innerHTML = active ? '❤️ В избранном' : '🤍 В избранное';
-        itemBtn.classList.toggle('active', active);
-      }
-    })
+    .then(cars => renderFavState(new Set(cars.map(c => c.id))))
     .catch(() => {});
 }
 
