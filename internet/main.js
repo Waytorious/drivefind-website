@@ -353,7 +353,17 @@ function initAuthHeader() {
   }
 
   const savedUser = localStorage.getItem('drivefind_token') && localStorage.getItem('drivefind_user');
-  authBtn.innerText = savedUser ? `👤 ${savedUser}` : 'Вход';
+  if (savedUser) {
+    const icon = document.createElement('span');
+    icon.className = 'material-symbols-outlined';
+    icon.textContent = 'person';
+    const nameSpan = document.createElement('span');
+    nameSpan.className = 'auth-username';
+    nameSpan.textContent = savedUser;
+    authBtn.append(icon, nameSpan);
+  } else {
+    authBtn.textContent = 'Вход';
+  }
   authBtn.onclick = e => {
     e.preventDefault();
     if (savedUser) {

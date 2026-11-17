@@ -78,12 +78,30 @@ header {
 }
 
 .auth-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   color: var(--primary);
   font-weight: bold;
   cursor: pointer;
   white-space: nowrap;
   flex-shrink: 0;
   line-height: 1;
+  padding-bottom: 3px;
+  border-bottom: 2px solid transparent;
+}
+
+.auth-nav-btn .material-symbols-outlined {
+  font-size: 1.15em;
+  height: 1em;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+}
+
+.auth-username {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* моя геройская секция */
