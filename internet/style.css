@@ -620,6 +620,7 @@ footer a {
   .compare-select {
     font-size: 0.82rem;
     padding: 0.4rem;
+    height: 2.35rem;
   }
   .spec-row {
     flex-direction: column;

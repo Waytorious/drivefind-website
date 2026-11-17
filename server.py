@@ -19,6 +19,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+@app.middleware("http")
+async def no_cache_static(request, call_next):
+    response = await call_next(request)
+    if not request.url.path.startswith("/images/"):
+        response.headers.setdefault("Cache-Control", "no-cache")
+    return response
+
 EMAIL_REGEX = r"^[^@\s]+@[^@\s]+\.[^@\s]+$"
 SORT_SQL = {
     "price_asc": "price ASC",
