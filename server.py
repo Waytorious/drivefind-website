@@ -23,6 +23,10 @@ app.add_middleware(
 
 @app.middleware("http")
 async def no_cache_static(request, call_next):
+    raw_len = request.headers.get("content-length") or "0"
+    if raw_len.isdigit() and int(raw_len) > 16384:
+        from fastapi.responses import JSONResponse
+        return JSONResponse({"detail": "Запрос слишком большой"}, status_code=413)
     response = await call_next(request)
     if not request.url.path.startswith("/images/"):
         response.headers.setdefault("Cache-Control", "no-cache")
@@ -50,20 +54,20 @@ def check_rate_limit(key: str, limit: int, window: int = 60):
 
 class UserRegisterRequest(BaseModel):
     username: str = Field(..., min_length=3, max_length=50)
-    email: str = Field(..., pattern=EMAIL_REGEX)
+    email: str = Field(..., max_length=100, pattern=EMAIL_REGEX)
     password: str = Field(..., min_length=6, max_length=100)
 
 
 class UserLoginRequest(BaseModel):
-    username: str
-    password: str
+    username: str = Field(..., max_length=100)
+    password: str = Field(..., max_length=100)
 
 
 class InquiryRequest(BaseModel):
-    name: str = Field(..., min_length=2)
-    email: str = Field(..., pattern=EMAIL_REGEX)
-    phone: Optional[str] = None
-    message: str = Field(..., min_length=5)
+    name: str = Field(..., min_length=2, max_length=100)
+    email: str = Field(..., max_length=100, pattern=EMAIL_REGEX)
+    phone: Optional[str] = Field(None, max_length=100)
+    message: str = Field(..., min_length=5, max_length=500)
     car_id: Optional[int] = None
 
 
