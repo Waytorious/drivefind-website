@@ -1,6 +1,7 @@
 import json
 import os
 import secrets
+import time
 from typing import Optional
 
 from fastapi import Depends, FastAPI, Header, HTTPException, Query, status
@@ -28,12 +29,22 @@ async def no_cache_static(request, call_next):
     return response
 
 EMAIL_REGEX = r"^[^@\s]+@[^@\s]+\.[^@\s]+$"
+RATE_BUCKETS: dict[str, list[float]] = {}
 SORT_SQL = {
     "price_asc": "price ASC",
     "price_desc": "price DESC",
     "year_desc": "year DESC",
     "mileage_asc": "mileage ASC",
 }
+
+
+def check_rate_limit(key: str, limit: int, window: int = 60):
+    now = time.monotonic()
+    hits = [t for t in RATE_BUCKETS.get(key, []) if now - t < window]
+    if len(hits) >= limit:
+        raise HTTPException(status_code=429, detail="Слишком много запросов, попробуйте через минуту")
+    hits.append(now)
+    RATE_BUCKETS[key] = hits
 
 
 class UserRegisterRequest(BaseModel):
@@ -161,9 +172,13 @@ def get_car_by_id(car_id: int):
 
 @app.post("/api/auth/register", status_code=status.HTTP_201_CREATED)
 def register(data: UserRegisterRequest):
+    check_rate_limit("register", limit=3, window=60)
     conn = get_db_connection()
     cursor = conn.cursor()
 
+    if cursor.execute("SELECT COUNT(*) FROM users").fetchone()[0] >= 100:
+        conn.close()
+        raise HTTPException(status_code=429, detail="Регистрация временно ограничена")
     if cursor.execute("SELECT id FROM users WHERE username = ?", (data.username,)).fetchone():
         conn.close()
         raise HTTPException(status_code=400, detail="Пользователь с таким логином уже существует")
@@ -189,6 +204,7 @@ def register(data: UserRegisterRequest):
 
 @app.post("/api/auth/login")
 def login(data: UserLoginRequest):
+    check_rate_limit("login", limit=10, window=60)
     conn = get_db_connection()
     cursor = conn.cursor()
     user = cursor.execute("SELECT * FROM users WHERE username = ?", (data.username,)).fetchone()
@@ -265,6 +281,7 @@ def remove_favorite(car_id: int, current_user: dict = Depends(get_current_user))
 
 @app.post("/api/inquiries", status_code=status.HTTP_201_CREATED)
 def submit_inquiry(inquiry: InquiryRequest, current_user: Optional[dict] = Depends(get_optional_user)):
+    check_rate_limit("inquiries", limit=5, window=60)
     user_id = current_user["id"] if current_user else None
     conn = get_db_connection()
     cursor = conn.cursor()
