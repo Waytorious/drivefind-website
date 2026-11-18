@@ -30,6 +30,7 @@ async def no_cache_static(request, call_next):
 
 EMAIL_REGEX = r"^[^@\s]+@[^@\s]+\.[^@\s]+$"
 RATE_BUCKETS: dict[str, list[float]] = {}
+_CARS_CACHE: list[dict] = []
 SORT_SQL = {
     "price_asc": "price ASC",
     "price_desc": "price DESC",
@@ -135,6 +136,13 @@ def get_cars(
     search: Optional[str] = Query(None),
     sort: Optional[str] = Query("default"),
 ):
+    is_default = (
+        max_price is None and min_year is None and max_mileage is None
+        and not search and sort in (None, "default")
+    )
+    if is_default and _CARS_CACHE:
+        return _CARS_CACHE
+
     sql = "SELECT * FROM cars WHERE 1=1"
     params = []
 
@@ -157,7 +165,10 @@ def get_cars(
     conn = get_db_connection()
     rows = conn.execute(sql, params).fetchall()
     conn.close()
-    return [row_to_car(r) for r in rows]
+    cars = [row_to_car(r) for r in rows]
+    if is_default:
+        _CARS_CACHE.extend(cars)
+    return cars
 
 
 @app.get("/api/cars/{car_id}")
