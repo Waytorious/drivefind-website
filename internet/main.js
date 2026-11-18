@@ -297,7 +297,7 @@ function initAuthHeader() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
       })
-      .then(r => r.ok ? r.json() : r.json().then(j => { throw new Error(j.detail || fallbackErr); }))
+      .then(r => r.ok ? r.json() : r.json().then(j => { throw new Error(typeof j.detail === 'string' ? j.detail : fallbackErr); }))
       .then(data => {
         localStorage.setItem('drivefind_token', data.token);
         localStorage.setItem('drivefind_user', data.user.username);
@@ -319,8 +319,10 @@ function initAuthHeader() {
       const e = document.getElementById('reg-email').value.trim();
       const p = document.getElementById('reg-password').value;
       if (!u || !e || !p) return showErr('Заполните все поля!');
+      if (u.length < 3) return showErr('Логин должен быть не менее 3 символов!');
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e)) return showErr('Введите корректный email (например user@mail.ru)!');
       if (p.length < 6) return showErr('Пароль должен быть не менее 6 символов!');
-      authSubmit('/api/auth/register', { username: u, email: e, password: p }, 'Ошибка регистрации');
+      authSubmit('/api/auth/register', { username: u, email: e, password: p }, 'Проверьте корректность введённых данных');
     };
   }
 
