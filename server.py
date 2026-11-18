@@ -43,12 +43,13 @@ SORT_SQL = {
 }
 
 
-def check_rate_limit(key: str, limit: int, window: int = 60):
+def check_rate_limit(key: str, limit: int, window: int = 60, record: bool = True):
     now = time.monotonic()
     hits = [t for t in RATE_BUCKETS.get(key, []) if now - t < window]
     if len(hits) >= limit:
         raise HTTPException(status_code=429, detail="Слишком много запросов, попробуйте через минуту")
-    hits.append(now)
+    if record:
+        hits.append(now)
     RATE_BUCKETS[key] = hits
 
 
@@ -90,6 +91,12 @@ def row_to_car(row) -> dict:
 
 
 def create_session(cursor, user_id: int) -> str:
+    cursor.execute(
+        """DELETE FROM sessions WHERE user_id = ? AND token NOT IN (
+               SELECT token FROM sessions WHERE user_id = ? ORDER BY created_at DESC, rowid DESC LIMIT 9
+           )""",
+        (user_id, user_id),
+    )
     token = secrets.token_hex(32)
     cursor.execute("INSERT INTO sessions (token, user_id) VALUES (?, ?)", (token, user_id))
     return token
@@ -177,6 +184,11 @@ def get_cars(
 
 @app.get("/api/cars/{car_id}")
 def get_car_by_id(car_id: int):
+    if _CARS_CACHE:
+        cached = next((c for c in _CARS_CACHE if c["id"] == car_id), None)
+        if cached:
+            return cached
+        raise HTTPException(status_code=404, detail="Автомобиль не найден")
     conn = get_db_connection()
     row = conn.execute("SELECT * FROM cars WHERE id = ?", (car_id,)).fetchone()
     conn.close()
@@ -219,13 +231,17 @@ def register(data: UserRegisterRequest):
 
 @app.post("/api/auth/login")
 def login(data: UserLoginRequest):
-    check_rate_limit("login", limit=10, window=60)
+    fail_key = f"login_fail:{data.username.strip().lower()}"
+    check_rate_limit(fail_key, limit=5, window=60, record=False)
+    check_rate_limit("login_fail_global", limit=20, window=60, record=False)
     conn = get_db_connection()
     cursor = conn.cursor()
     user = cursor.execute("SELECT * FROM users WHERE username = ?", (data.username,)).fetchone()
 
     if not user or not verify_password(data.password, user["password_hash"]):
         conn.close()
+        check_rate_limit(fail_key, limit=5, window=60, record=True)
+        check_rate_limit("login_fail_global", limit=20, window=60, record=True)
         raise HTTPException(status_code=401, detail="Неверное имя пользователя или пароль")
 
     token = create_session(cursor, user["id"])
@@ -274,6 +290,7 @@ def get_favorites(current_user: dict = Depends(get_current_user)):
 
 @app.post("/api/favorites/{car_id}")
 def add_favorite(car_id: int, current_user: dict = Depends(get_current_user)):
+    check_rate_limit(f"fav:{current_user['id']}", limit=30, window=60)
     conn = get_db_connection()
     if not conn.execute("SELECT id FROM cars WHERE id = ?", (car_id,)).fetchone():
         conn.close()
@@ -287,6 +304,7 @@ def add_favorite(car_id: int, current_user: dict = Depends(get_current_user)):
 
 @app.delete("/api/favorites/{car_id}")
 def remove_favorite(car_id: int, current_user: dict = Depends(get_current_user)):
+    check_rate_limit(f"fav:{current_user['id']}", limit=30, window=60)
     conn = get_db_connection()
     conn.execute("DELETE FROM favorites WHERE user_id = ? AND car_id = ?", (current_user["id"], car_id))
     conn.commit()
@@ -300,6 +318,9 @@ def submit_inquiry(inquiry: InquiryRequest, current_user: Optional[dict] = Depen
     user_id = current_user["id"] if current_user else None
     conn = get_db_connection()
     cursor = conn.cursor()
+    if cursor.execute("SELECT COUNT(*) FROM inquiries").fetchone()[0] >= 100:
+        conn.close()
+        raise HTTPException(status_code=429, detail="Прием заявок временно ограничен")
     cursor.execute(
         """INSERT INTO inquiries (user_id, car_id, name, email, phone, message)
            VALUES (?, ?, ?, ?, ?, ?)""",
